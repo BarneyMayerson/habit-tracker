@@ -29,6 +29,11 @@ class HabitsController extends Controller
 
     public function update(Habit $habit)
     {
+        $attributes = request()->validate([
+            'name' => 'required',
+            'times_per_day' => 'required',
+        ]);
+        
         $habit->update([
             'name' => request('name'),
             'times_per_day' => request('times_per_day'),

@@ -27,4 +27,38 @@ class UpdateTest extends TestCase
         $response->assertRedirect('habits');
         $this->assertDatabaseHas('habits', ['id' => $habit->id, ...$newAttributes]);
     }
+
+    /** 
+     * @test
+     * @dataProvider provideBadHabitData 
+     */
+    function update_habit_validation($missing, $attributes)
+    {
+        $habit = Habit::factory()->create();
+        $response = $this->put("/habits/{$habit->id}", $attributes);
+
+        $response->assertSessionHasErrors([$missing]);
+    }
+
+    function provideBadHabitData()
+    {
+        $habit = Habit::factory()->make();
+
+        return [
+            'missing name' => [
+                'name',
+                [
+                    ...$habit->toArray(),
+                    'name' => null,
+                ]
+            ],
+            'missing times_per_day' => [
+                'times_per_day',
+                [
+                    ...$habit->toArray(),
+                    'times_per_day' => null,
+                ]
+            ]
+        ];
+    }
 }
