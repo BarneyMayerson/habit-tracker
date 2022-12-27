@@ -33,11 +33,18 @@ class HabitsController extends Controller
             'name' => 'required',
             'times_per_day' => 'required',
         ]);
-        
+
         $habit->update([
             'name' => request('name'),
             'times_per_day' => request('times_per_day'),
         ]);
+
+        return to_route('habits.index');
+    }
+
+    public function destroy(Habit $habit)
+    {
+        $habit->delete();
 
         return to_route('habits.index');
     }
