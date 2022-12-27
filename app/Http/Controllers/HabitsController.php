@@ -24,4 +24,14 @@ class HabitsController extends Controller
 
         return to_route('habits.index');
     }
+
+    public function update(Habit $habit)
+    {
+        $habit->update([
+            'name' => request('name'),
+            'times_per_day' => request('times_per_day'),
+        ]);
+        
+        return to_route('habits.index');
+    }
 }
