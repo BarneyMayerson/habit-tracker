@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Habit;
 
-use Attribute;
+use App\Models\Habit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,29 +25,36 @@ class CreateTest extends TestCase
         $this->assertDatabaseHas('habits', $attributes);
     }
 
-    /** @test */
-    function name_is_required()
+    /** 
+     * @test
+     * @dataProvider provideBadHabitData 
+     */
+    function create_habit_validation($missing, $attributes)
     {
-        $attributes = [
-            'name' => null,
-            'times_per_day' => 3,
-        ];
-
         $response = $this->post('/habits', $attributes);
 
-        $response->assertSessionHasErrors(['name']);
+        $response->assertSessionHasErrors([$missing]);
     }
 
-    /** @test */
-    function times_per_day_is_required()
+    function provideBadHabitData()
     {
-        $attributes = [
-            'name' => 'test',
-            'times_per_day' => null,
+        $habit = Habit::factory()->make();
+
+        return [
+            'missing name' => [
+                'name',
+                [
+                    ...$habit->toArray(),
+                    'name' => null,
+                ]
+            ],
+            'missing times_per_day' => [
+                'times_per_day',
+                [
+                    ...$habit->toArray(),
+                    'times_per_day' => null,
+                ]
+            ]
         ];
-
-        $response = $this->post('/habits', $attributes);
-
-        $response->assertSessionHasErrors(['times_per_day']);
     }
 }
