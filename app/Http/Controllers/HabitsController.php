@@ -17,10 +17,12 @@ class HabitsController extends Controller
 
     public function store()
     {
-        Habit::create([
-            'name' => request('name'),
-            'times_per_day' => request('times_per_day'),
+        $attributes = request()->validate([
+            'name' => 'required',
+            'times_per_day' => 'required',
         ]);
+
+        Habit::create($attributes);
 
         return to_route('habits.index');
     }
@@ -31,7 +33,7 @@ class HabitsController extends Controller
             'name' => request('name'),
             'times_per_day' => request('times_per_day'),
         ]);
-        
+
         return to_route('habits.index');
     }
 }

@@ -24,4 +24,30 @@ class CreateTest extends TestCase
         $response->assertRedirect('/habits');
         $this->assertDatabaseHas('habits', $attributes);
     }
+
+    /** @test */
+    function name_is_required()
+    {
+        $attributes = [
+            'name' => null,
+            'times_per_day' => 3,
+        ];
+
+        $response = $this->post('/habits', $attributes);
+
+        $response->assertSessionHasErrors(['name']);
+    }
+
+    /** @test */
+    function times_per_day_is_required()
+    {
+        $attributes = [
+            'name' => 'test',
+            'times_per_day' => null,
+        ];
+
+        $response = $this->post('/habits', $attributes);
+
+        $response->assertSessionHasErrors(['times_per_day']);
+    }
 }
