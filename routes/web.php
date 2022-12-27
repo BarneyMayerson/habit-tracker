@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/habits', [HabitsController::class, 'index'])->name('habits.index');
+Route::post('/habits', [HabitsController::class, 'store'])->name('habits.store');

@@ -14,4 +14,14 @@ class HabitsController extends Controller
             'habits' => $habits,
         ]);
     }
+
+    public function store()
+    {
+        Habit::create([
+            'name' => request('name'),
+            'times_per_day' => request('times_per_day'),
+        ]);
+
+        return to_route('habits.index');
+    }
 }
