@@ -16,12 +16,22 @@
             <div class="flex basis-1/4 justify-center p-2.5">
               <button class="bg-primary-600 text-white font-semibold text-2xl rounded-lg px-4 py-2">+1</button>
             </div>
-            <div x-data="{ percent: 30 }" class="flex basis-1/4 justify-center">
+            <div x-data="{ percent: 30, circumference: 30 * 2 * Math.PI }" class="flex basis-1/4 justify-center">
               <div class="relative inline-flex items-center justify-center overflow-hidden">
                 <div class="flex absolute inset-0 items-center justify-center text-sm font-semibold" x-text="`${percent}%`"></div>
 
                 <svg class="w-20 h-20 transform -rotate-90">
                   <circle class="text-gray-300" stroke-width="6" stroke="currentColor" fill="transparent" r="30" cx="40" cy="40" />
+                  <circle 
+                    class="text-primary-600" 
+                    stroke-width="6" 
+                    stroke="currentColor" 
+                    fill="transparent" 
+                    r="30" cx="40" cy="40" 
+                    :stroke-dasharray="circumference"
+                    :stroke-dashoffset="circumference - (percent / 100 * circumference )" 
+                    stroke-linecap="round"
+                  />
                 </svg>
               </div>
             </div>
