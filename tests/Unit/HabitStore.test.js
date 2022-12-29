@@ -15,4 +15,14 @@ describe("Habits Store", () => {
 
     expect(habits.list.length).toBe(1);
   });
+
+  it("increments the executions", async () => {
+    await habits.fetch();
+    const habitIndex = 0;
+    habits.list[habitIndex].executions_count = 0;
+
+    habits.newExecution(habitIndex);
+
+    expect(habits.list[habitIndex].executions_count).toBe(1);
+  });
 });

@@ -15,8 +15,13 @@ export const useHabitsStore = defineStore("habits", () => {
     }
   };
 
+  const newExecution = (index) => {
+    list.value[index].executions_count++;
+  };
+
   return {
     list,
     fetch,
+    newExecution,
   };
 });
