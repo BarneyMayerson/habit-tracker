@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./resources/**/*.blade.php", "./storage/framework/views/*.php"],
+  content: ["./resources/**/*.blade.php", "./resources/**/*.vue"],
   theme: {
     extend: {
       fontFamily: {
