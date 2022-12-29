@@ -1,4 +1,5 @@
 import axios from "axios";
+import { floor } from "lodash";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -19,9 +20,20 @@ export const useHabitsStore = defineStore("habits", () => {
     list.value[index].executions_count++;
   };
 
+  const percent = (index) => {
+    return list.value[index].times_per_day > 0
+      ? Math.floor(
+          (list.value[index].executions_count /
+            list.value[index].times_per_day) *
+            100
+        )
+      : 0;
+  };
+
   return {
     list,
     fetch,
     newExecution,
+    percent,
   };
 });
