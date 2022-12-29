@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { exec } from "child_process";
 import { ref } from "vue";
 
 const executions_count = ref(0);
