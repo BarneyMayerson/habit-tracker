@@ -9,7 +9,6 @@
     "@pinia/testing": "^0.0.14",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/test-utils": "^2.2.6",
-    "alpinejs": "^3.10.5",
     "autoprefixer": "^10.4.13",
     "axios": "^1.1.2",
     "eslint": "^8.30.0",
