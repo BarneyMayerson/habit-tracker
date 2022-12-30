@@ -6,15 +6,7 @@
         <button class="text-white bg-primary-600 rounded-md px-2.5 py-2">New Habit</button>
       </div>
 
-      <div class="divide-y divide-gray-300/10 mt-6">
-        <div class="text-base leading-7 text-gray-900">
-          <div class="flex items-center py-2.5">
-              <habit-info name="Drink waterloo" times_per_day="3" executions_count="1"></habit-info>
-              <execute-button></execute-button>
-              <progress-bar percent="30"></progress-bar>
-          </div>
-        </div>
-      </div>
+      <habits />
     </div>
   </div>
 </x-app-layout>
