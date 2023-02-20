@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Habit;
 
+use App\Http\Resources\HabitResource;
 use App\Models\Habit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Request;
 use Tests\TestCase;
 
 class UpdateTest extends TestCase
@@ -21,11 +23,17 @@ class UpdateTest extends TestCase
             'times_per_day' => 5,
         ];
 
+        $request = Request::create("/api/habits/{$habit->id}", 'put');
 
-        $response = $this->withExceptionHandling()->put("/habits/{$habit->id}", $newAttributes);
+        $response = $this->withExceptionHandling()->putJson("/api/habits/{$habit->id}", $newAttributes);
 
-        $response->assertRedirect('habits');
+        $habitResource = HabitResource::collection(Habit::withCount('executions')->get());
+        $expectedResource = $habitResource->response($request)->getData(true);
+
         $this->assertDatabaseHas('habits', ['id' => $habit->id, ...$newAttributes]);
+        $response
+            ->assertOk()
+            ->assertJson($expectedResource);
     }
 
     /** 
