@@ -43,9 +43,9 @@ class UpdateTest extends TestCase
     function update_habit_validation($missing, $attributes)
     {
         $habit = Habit::factory()->create();
-        $response = $this->put("/habits/{$habit->id}", $attributes);
+        $response = $this->putJson("/api/habits/{$habit->id}", $attributes);
 
-        $response->assertSessionHasErrors([$missing]);
+        $response->assertJsonValidationErrors([$missing]);
     }
 
     function provideBadHabitData()

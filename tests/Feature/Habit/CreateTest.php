@@ -55,9 +55,9 @@ class CreateTest extends TestCase
      */
     function create_habit_validation($missing, $attributes)
     {
-        $response = $this->post('/habits', $attributes);
+        $response = $this->postJson('/api/habits', $attributes);
 
-        $response->assertSessionHasErrors([$missing]);
+        $response->assertJsonValidationErrors([$missing]);
     }
 
     function provideBadHabitData()
