@@ -11,7 +11,7 @@
           :times_per_day="habit.times_per_day"
           :executions_count="habit.executions_count"
         />
-        <execute-button />
+        <execute-button @newExecution="habits.newExecution(index)" />
         <progress-bar :percent="habits.percent(index)" />
       </div>
     </div>
