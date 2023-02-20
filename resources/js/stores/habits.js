@@ -16,7 +16,9 @@ export const useHabitsStore = defineStore("habits", () => {
   };
 
   const newExecution = (index) => {
-    list.value[index].executions_count++;
+    if (list.value[index].executions_count < list.value[index].times_per_day) {
+      list.value[index].executions_count++;
+    }
   };
 
   const percent = (index) => {
