@@ -14,38 +14,4 @@ class HabitsController extends Controller
             'habits' => $habits,
         ]);
     }
-
-    public function store()
-    {
-        $attributes = request()->validate([
-            'name' => 'required',
-            'times_per_day' => 'required',
-        ]);
-
-        Habit::create($attributes);
-
-        return to_route('habits.index');
-    }
-
-    public function update(Habit $habit)
-    {
-        $attributes = request()->validate([
-            'name' => 'required',
-            'times_per_day' => 'required',
-        ]);
-
-        $habit->update([
-            'name' => request('name'),
-            'times_per_day' => request('times_per_day'),
-        ]);
-
-        return to_route('habits.index');
-    }
-
-    public function destroy(Habit $habit)
-    {
-        $habit->delete();
-
-        return to_route('habits.index');
-    }
 }
