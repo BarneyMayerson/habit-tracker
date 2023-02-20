@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Habit;
 
+use App\Http\Resources\HabitResource;
 use App\Models\Habit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Request;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
@@ -19,10 +21,32 @@ class CreateTest extends TestCase
             'times_per_day' => 3,
         ];
 
-        $response = $this->withoutExceptionHandling()->post('/habits', $attributes);
+        $response = $this->withoutExceptionHandling()->postJson('/api/habits', $attributes);
 
-        $response->assertRedirect('/habits');
+        $response->assertOk();
         $this->assertDatabaseHas('habits', $attributes);
+    }
+
+    /** @test */
+    function habits_are_fetched_after_habit_is_created()
+    {
+        $attributes = [
+            'name' => 'test',
+            'times_per_day' => 3,
+        ];
+
+        $request = Request::create('/api/habits', 'post');
+        
+        $response = $this->withoutExceptionHandling()->postJson('/api/habits', $attributes);
+        
+        $habitResource = HabitResource::collection(Habit::withCount('executions')->get());
+        $expectedResource = $habitResource->response($request)->getData(true);
+
+
+        $this->assertDatabaseHas('habits', $attributes);
+        $response
+            ->assertOk()
+            ->assertJson($expectedResource);
     }
 
     /** 

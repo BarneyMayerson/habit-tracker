@@ -12,4 +12,16 @@ class HabitsApiController extends Controller
     {
         return HabitResource::collection(Habit::withCount('executions')->get());
     }
+
+    public function store()
+    {
+        $attributes = request()->validate([
+            'name' => 'required',
+            'times_per_day' => 'required',
+        ]);
+
+        Habit::create($attributes);
+
+        return HabitResource::collection(Habit::withCount('executions')->get());
+    }
 }
